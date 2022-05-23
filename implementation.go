@@ -2,8 +2,7 @@ package lab2
 
 import "fmt"
 
-// TODO: document this function.
-// PrefixToPostfix converts
-func PrefixToPostfix(input string) (string, error) {
+// PostfixToPrefix converts reverse polish notation into prefix notation.
+func PostfixToPrefix(input string) (string, error) {
 	return "TODO", fmt.Errorf("TODO")
 }
