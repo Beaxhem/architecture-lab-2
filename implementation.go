@@ -13,6 +13,10 @@ func pop(_list *[]string) string {
 	return last
 }
 
+func isOperator(op string) bool {
+	return op == "+" || op == "-" || op == "*" || op == "/" || op == "^"
+}
+
 // Converts postfix notation into prefix notation.
 func PostfixToPrefix(input string) (string, error) {
 	if len(input) == 0 {
@@ -21,7 +25,7 @@ func PostfixToPrefix(input string) (string, error) {
 	elements := strings.Split(input, " ")
 	stack := make([]string, 0)
 	for _, element := range elements {
-		if element == "+" || element == "-" || element == "*" || element == "/" {
+		if isOperator(element) {
 			if len(stack) < 2 {
 				return "", fmt.Errorf("not enough operands")
 			}
