@@ -13,7 +13,13 @@ type MySuite struct{}
 var _ = Suite(&MySuite{})
 
 func (s *MySuite) TestPostfixToPrefix(c *C) {
-	res, err := PostfixToPrefix("+ 5 * - 4 2 3")
+	res, err := PostfixToPrefix("4 2 - 3 * 5 +")
 	c.Assert(err, IsNil)
-	c.Assert(res, Equals, "4 2 - 3 * 5 +")
+	c.Assert(res, Equals, "+ * - 4 2 3 5")
+}
+
+func (s *MySuite) TestPostfixToPrefixFail(c *C) {
+	res, err := PostfixToPrefix("+ 2 2")
+	c.Assert(err, NotNil)
+	c.Assert(res, Equals, "")
 }
