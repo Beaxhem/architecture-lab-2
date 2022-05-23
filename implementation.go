@@ -2,6 +2,7 @@ package lab2
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -12,8 +13,11 @@ func pop(_list *[]string) string {
 	return last
 }
 
-// PostfixToPrefix converts reverse polish notation into prefix notation.
+// Converts postfix notation into prefix notation.
 func PostfixToPrefix(input string) (string, error) {
+	if len(input) == 0 {
+		return "", fmt.Errorf("empty string")
+	}
 	elements := strings.Split(input, " ")
 	stack := make([]string, 0)
 	for _, element := range elements {
@@ -25,9 +29,14 @@ func PostfixToPrefix(input string) (string, error) {
 			op1 := pop(&stack)
 			stack = append(stack, element+" "+op1+" "+op2)
 		} else {
+			if _, err := strconv.Atoi(element); err != nil {
+				return "", fmt.Errorf("%v is not a number", element)
+			}
 			stack = append(stack, element)
 		}
 	}
+	if len(stack) != 1 {
+		return "", fmt.Errorf("not enough operands")
+	}
 	return strings.Join(stack, " "), nil
-
 }
