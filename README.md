@@ -25,6 +25,11 @@
     -o:
         Output file.
 
+## Github actions examples
+
+- [Test pass](https://github.com/Beaxhem/architecture-lab-2/actions/runs/2387298756)
+- [Test fail](https://github.com/Beaxhem/architecture-lab-2/runs/6600669439?check_suite_focus=true)
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
