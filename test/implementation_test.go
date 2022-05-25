@@ -8,7 +8,7 @@ import (
 	. "gopkg.in/check.v1"
 )
 
-func ImplementationTest(t *testing.T) { TestingT(t) }
+func Test(t *testing.T) { TestingT(t) }
 
 type ImplementationSuite struct{}
 

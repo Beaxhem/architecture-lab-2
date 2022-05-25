@@ -16,7 +16,7 @@ type ComputeHandler struct {
 	Writer io.Writer
 }
 
-func NewComputeHandler(inputExpression *string, inputPath *string, outputPath *string) (*ComputeHandler, error) {
+func NewComputeHandler(inputExpression string, inputPath string, outputPath string) (*ComputeHandler, error) {
 	reader, err := reader(inputExpression, inputPath)
 	if err != nil {
 		return nil, err
@@ -50,12 +50,12 @@ func (ch *ComputeHandler) Compute() error {
 // If inputExpression is not empty, returns strings.NewReader(inputExpression).
 // If inputPath is not empty, returns os.Open(inputPath).
 // If both inputExpression and inputPath are empty, returns os.Stdin.
-func reader(inputExpression *string, inputPath *string) (io.Reader, error) {
-	if inputExpression != nil && *inputExpression != "" {
-		return strings.NewReader(*inputExpression), nil
+func reader(inputExpression string, inputPath string) (io.Reader, error) {
+	if inputExpression != "" {
+		return strings.NewReader(inputExpression), nil
 	}
-	if inputPath != nil && *inputPath != "" {
-		reader, err := os.Open(*inputPath)
+	if inputPath != "" {
+		reader, err := os.Open(inputPath)
 		if err != nil {
 			return nil, err
 		}
@@ -65,9 +65,9 @@ func reader(inputExpression *string, inputPath *string) (io.Reader, error) {
 }
 
 // Returns io.Writer depending on outputPath. If outputPath is empty, returns os.Stdout.
-func writer(outputPath *string) (io.Writer, error) {
-	if outputPath != nil && *outputPath != "" {
-		writer, err := os.Create(*outputPath)
+func writer(outputPath string) (io.Writer, error) {
+	if outputPath != "" {
+		writer, err := os.Create(outputPath)
 		if err != nil {
 			return nil, err
 		}

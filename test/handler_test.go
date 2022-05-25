@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	. "github.com/Beaxhem/architecture-lab-2/handler"
+	// . "github.com/Beaxhem/architecture-lab-2/handler"
 	. "gopkg.in/check.v1"
 )
 

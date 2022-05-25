@@ -15,7 +15,7 @@ var (
 
 func main() {
 	flag.Parse()
-	handler, err := handler.NewComputeHandler(inputExpression, inputPath, outputPath)
+	handler, err := handler.NewComputeHandler(*inputExpression, *inputPath, *outputPath)
 	if err != nil {
 		fmt.Println(err)
 		return
