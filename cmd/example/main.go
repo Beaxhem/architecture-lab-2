@@ -3,26 +3,58 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
+	"os"
+	"strings"
 
 	lab2 "github.com/Beaxhem/architecture-lab-2"
 )
 
 var (
 	inputExpression = flag.String("e", "", "Expression to compute")
-	// TODO: Add other flags support for input and output configuration.
+	inputPath       = flag.String("f", "", "Path to file with expression to compute")
+	outputPath      = flag.String("o", "", "Path to file to write the result")
 )
 
 func main() {
 	flag.Parse()
+	handler := lab2.ComputeHandler{
+		Reader: reader(inputExpression, inputPath),
+		Writer: writer(outputPath),
+	}
 
-	// TODO: Change this to accept input from the command line arguments as described in the task and
-	//       output the results using the ComputeHandler instance.
-	//       handler := &lab2.ComputeHandler{
-	//           Input: {construct io.Reader according the command line parameters},
-	//           Output: {construct io.Writer according the command line parameters},
-	//       }
-	//       err := handler.Compute()
+	err := handler.Compute()
+	if err != nil {
+		fmt.Println(err)
+	}
+}
 
-	res, _ := lab2.PostfixToPrefix("+ 2 2")
-	fmt.Println(res)
+// Returns io.Reader depending on inputExpression and inputPath.
+// If inputExpression is not empty, returns strings.NewReader(inputExpression).
+// If inputPath is not empty, returns os.Open(inputPath).
+// If both inputExpression and inputPath are empty, returns os.Stdin.
+func reader(inputExpression *string, inputPath *string) io.Reader {
+	if inputExpression != nil && *inputExpression != "" {
+		return strings.NewReader(*inputExpression)
+	}
+	if inputPath != nil && *inputPath != "" {
+		reader, err := os.Open(*inputPath)
+		if err != nil {
+			return nil
+		}
+		return reader
+	}
+	return os.Stdin
+}
+
+// Returns io.Writer depending on outputPath. If outputPath is empty, returns os.Stdout.
+func writer(outputPath *string) io.Writer {
+	if outputPath != nil && *outputPath != "" {
+		writer, err := os.Create(*outputPath)
+		if err != nil {
+			return nil
+		}
+		return writer
+	}
+	return os.Stdout
 }
