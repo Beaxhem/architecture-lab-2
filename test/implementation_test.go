@@ -21,7 +21,7 @@ func (s *ImplementationSuite) TestPostfixToPrefix(c *C) {
 }
 
 func (s *ImplementationSuite) TestPostfixToPrefixLongExpressions(c *C) {
-	res, err := PostfixToPrefix("4 2 - 3 * 5 + 6 / 2 +")
+	res, err := PostfixToPrefix("4 2 - 3 * 5 + 6 / 2")
 	c.Assert(err, IsNil)
 	c.Assert(res, Equals, "+ / + * - 4 2 3 5 6 2")
 }
