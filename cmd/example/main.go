@@ -4,25 +4,24 @@ import (
 	"flag"
 	"fmt"
 
-	lab2 "github.com/Beaxhem/architecture-lab-2"
+	handler "github.com/Beaxhem/architecture-lab-2/handler"
 )
 
 var (
 	inputExpression = flag.String("e", "", "Expression to compute")
-	// TODO: Add other flags support for input and output configuration.
+	inputPath       = flag.String("f", "", "Path to file with expression to compute")
+	outputPath      = flag.String("o", "", "Path to file to write the result to")
 )
 
 func main() {
 	flag.Parse()
-
-	// TODO: Change this to accept input from the command line arguments as described in the task and
-	//       output the results using the ComputeHandler instance.
-	//       handler := &lab2.ComputeHandler{
-	//           Input: {construct io.Reader according the command line parameters},
-	//           Output: {construct io.Writer according the command line parameters},
-	//       }
-	//       err := handler.Compute()
-
-	res, _ := lab2.PostfixToPrefix("+ 2 2")
-	fmt.Println(res)
+	handler, err := handler.NewComputeHandler(*inputExpression, *inputPath, *outputPath)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = handler.Compute()
+	if err != nil {
+		fmt.Println(err)
+	}
 }

@@ -1,61 +1,62 @@
-package lab2
+package tests
 
 import (
 	"fmt"
 	"testing"
 
+	. "github.com/Beaxhem/architecture-lab-2/implementation"
 	. "gopkg.in/check.v1"
 )
 
 func Test(t *testing.T) { TestingT(t) }
 
-type MySuite struct{}
+type ImplementationSuite struct{}
 
-var _ = Suite(&MySuite{})
+var _ = Suite(&ImplementationSuite{})
 
-func (s *MySuite) TestPostfixToPrefix(c *C) {
+func (s *ImplementationSuite) TestPostfixToPrefix(c *C) {
 	res, err := PostfixToPrefix("4 2 - 3 * 5 +")
 	c.Assert(err, IsNil)
 	c.Assert(res, Equals, "+ * - 4 2 3 5")
 }
 
-func (s *MySuite) TestPostfixToPrefixLongExpressions(c *C) {
+func (s *ImplementationSuite) TestPostfixToPrefixLongExpressions(c *C) {
 	res, err := PostfixToPrefix("4 2 - 3 * 5 + 6 / 2 +")
 	c.Assert(err, IsNil)
 	c.Assert(res, Equals, "+ / + * - 4 2 3 5 6 2")
 }
 
-func (s *MySuite) TestNotEnoughOperands(c *C) {
+func (s *ImplementationSuite) TestNotEnoughOperands(c *C) {
 	res, err := PostfixToPrefix("+ * + 2 2 3 5")
 	c.Assert(err, ErrorMatches, "not enough operands")
 	c.Assert(res, Equals, "")
 }
 
-func (s *MySuite) TestNotNumbers(c *C) {
+func (s *ImplementationSuite) TestNotNumbers(c *C) {
 	res, err := PostfixToPrefix("4 2 - 3 * A +")
 	c.Assert(err, ErrorMatches, "A is not a number")
 	c.Assert(res, Equals, "")
 }
 
-func (s *MySuite) TestEmptyExpression(c *C) {
+func (s *ImplementationSuite) TestEmptyExpression(c *C) {
 	res, err := PostfixToPrefix("")
 	c.Assert(err, ErrorMatches, "empty string")
 	c.Assert(res, Equals, "")
 }
 
-func (s *MySuite) TestOperatorOnly(c *C) {
+func (s *ImplementationSuite) TestOperatorOnly(c *C) {
 	res, err := PostfixToPrefix("+")
 	c.Assert(err, ErrorMatches, "not enough operands")
 	c.Assert(res, Equals, "")
 }
 
-func (s *MySuite) TestOneNumberOnly(c *C) {
+func (s *ImplementationSuite) TestOneNumberOnly(c *C) {
 	res, err := PostfixToPrefix("1")
 	c.Assert(err, IsNil)
 	c.Assert(res, Equals, "1")
 }
 
-func (s *MySuite) TestTwoNumbersOnly(c *C) {
+func (s *ImplementationSuite) TestTwoNumbersOnly(c *C) {
 	res, err := PostfixToPrefix("1 2")
 	c.Assert(err, ErrorMatches, "not enough operands")
 	c.Assert(res, Equals, "")
