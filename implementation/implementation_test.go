@@ -1,10 +1,9 @@
-package tests
+package implementation
 
 import (
 	"fmt"
 	"testing"
 
-	. "github.com/Beaxhem/architecture-lab-2/implementation"
 	. "gopkg.in/check.v1"
 )
 
